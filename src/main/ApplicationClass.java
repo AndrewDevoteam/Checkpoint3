@@ -1,9 +1,6 @@
-package main;
+package src.main;
 
-import domain.AutoMaker;
-import domain.Vehicle;
-import domain.VehicleRepository;
-import domain.VehicleService;
+import src.domain.*;
 
 import java.util.Scanner;
 
@@ -12,6 +9,7 @@ public class ApplicationClass {
         Scanner scanner = new Scanner(System.in);
         VehicleService vehicleService = new VehicleService();
         VehicleRepository vehicleRepository = new VehicleRepository();
+
 
         int continueOrNot = 1;
         while (continueOrNot != 0) {
@@ -45,16 +43,19 @@ public class ApplicationClass {
                     String color = scanner.next();
                     System.out.println("Please type in the automaker of the vehicle");
                     String autoMaker = scanner.next();
+                    System.out.println("Please Type in the vehicle type (ALL CAPS)");
+                    String vehicleType = scanner.next();
+                    VehicleTypeEnum vehicleTypeEnum = VehicleTypeEnum.valueOf(vehicleType);
                     AutoMaker automaker = new AutoMaker(autoMaker);
-                    Vehicle vehicle = new Vehicle(name, color, year, automaker);
-                    vehicleService.addVehicle(vehicle);
+                    Vehicle vehicle = vehicleService.addVehicle(name, color, year, automaker, vehicleTypeEnum);
+                    vehicleRepository.addVehicleToRepository(vehicle);
                 }
                 case 4 -> {
                     System.out.println("Please type in the name of the vehicle to update");
                     String selectedVehicle = scanner.next();
                     boolean result = false;
-                    for (Vehicle vehicle : vehicleRepository.getVehicleList()) {
-                        if (vehicle.getModel().equalsIgnoreCase(selectedVehicle)) {
+                    for (Vehicle car : vehicleRepository.getVehicleList()) {
+                        if (car.getModel().equalsIgnoreCase(selectedVehicle)) {
                             result = true;
                             System.out.println("Please type in the updated vehicle name ");
                             String updatedName = scanner.next();
@@ -64,12 +65,15 @@ public class ApplicationClass {
                             String updatedColor = scanner.next();
                             System.out.println("Please type in the updated name of the automaker ");
                             String updatedManufacturer = scanner.next();
+                            System.out.println("Please type in the updated vehicle type (ALL CAPS) ");
+                            String updatedType = scanner.next();
+                            VehicleTypeEnum vehicleTypeEnum = VehicleTypeEnum.valueOf(updatedType);
                             AutoMaker automaker = new AutoMaker(updatedManufacturer);
-                            Vehicle newVehicle = new Vehicle(updatedName, updatedColor, updatedYear, automaker);
-                            vehicleService.updateVehicle(vehicle, newVehicle);
+                            Vehicle newCar = vehicleService.addVehicle(updatedName, updatedColor, updatedYear, automaker, vehicleTypeEnum);
+                            vehicleService.updateVehicle(car, newCar);
                         }
                     }
-                    if (!result){
+                    if (!result) {
                         System.out.println("Invalid option");
                     }
                 }

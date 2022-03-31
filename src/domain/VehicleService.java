@@ -1,4 +1,4 @@
-package domain;
+package src.domain;
 
 public class VehicleService {
 
@@ -6,6 +6,7 @@ public class VehicleService {
 
     public void searchByAutomaker(String manufacturerName) {
         boolean result = false;
+
         for (int i = 0; i < vehicleRepository.getVehicleList().length; i++) {
             if (vehicleRepository.getVehicleList()[i].getAutoMaker().getName().equalsIgnoreCase(manufacturerName)) {
                 result = true;
@@ -30,28 +31,36 @@ public class VehicleService {
         }
     }
 
-    public void addVehicle(Vehicle vehicle) {
-        vehicleRepository.addVehicleRepository(vehicle);
+    public Vehicle addVehicle(String model, String color, String year, AutoMaker automaker, VehicleTypeEnum vehicleTypeEnum) {
+
+        return switch (vehicleTypeEnum) {
+            case CAR -> new Car(model, color, year, automaker, vehicleTypeEnum);
+            case MOTORCYCLE -> new Motorcycle(model, color, year, automaker, vehicleTypeEnum);
+            case VAN -> new Van(model, color, year, automaker, vehicleTypeEnum);
+            case TRUCK -> new Truck(model, color, year, automaker, vehicleTypeEnum);
+            case PICKUP -> new PickUp(model, color, year, automaker, vehicleTypeEnum);
+            case OTHERS -> new Others(model, color, year, automaker, vehicleTypeEnum);
+        };
     }
 
-    public void updateVehicle(Vehicle vehicleOld, Vehicle vehicleNew) {
+    public void updateVehicle(Vehicle carOld, Vehicle carNew) {
         for (int i = 0; i < vehicleRepository.getVehicleList().length; i++) {
-            if (vehicleRepository.getVehicleList()[i].getModel().equalsIgnoreCase(vehicleOld.getModel())) {
-                vehicleRepository.getVehicleList()[i].setModel(vehicleNew.getModel());
-                vehicleRepository.getVehicleList()[i].setColor(vehicleNew.getColor());
-                vehicleRepository.getVehicleList()[i].setYear(vehicleNew.getYear());
-                vehicleRepository.getVehicleList()[i].setAutoMaker(vehicleNew.getAutoMaker());
+            if (vehicleRepository.getVehicleList()[i].getModel().equalsIgnoreCase(carOld.getModel())) {
+                vehicleRepository.getVehicleList()[i].setModel(carNew.getModel());
+                vehicleRepository.getVehicleList()[i].setColor(carNew.getColor());
+                vehicleRepository.getVehicleList()[i].setYear(carNew.getYear());
+                vehicleRepository.getVehicleList()[i].setAutoMaker(carNew.getAutoMaker());
+                vehicleRepository.getVehicleList()[i].setVehicleTypeEnum(carNew.getVehicleType());
             }
         }
-
     }
 
     public void deleteVehicleByModel(String deleteVehicle) {
         boolean result = false;
-        for (Vehicle vehicle : vehicleRepository.getVehicleList()) {
-            if (vehicle.getModel().equalsIgnoreCase(deleteVehicle)) {
+        for (Vehicle car : vehicleRepository.getVehicleList()) {
+            if (car.getModel().equalsIgnoreCase(deleteVehicle)) {
                 result = true;
-                vehicleRepository.updatedVehicleRepository(vehicle);
+                vehicleRepository.updatedVehicleRepository(car);
                 System.out.println("Vehicle was successfully deleted");
             }
         }

@@ -1,16 +1,27 @@
-package domain;
+package src.domain;
 
-public class Vehicle {
+public abstract class Vehicle implements GetVehicleType{
+
     private String model;
     private String color;
     private String year;
     private AutoMaker autoMaker;
+    protected VehicleTypeEnum vehicleTypeEnum;
 
-    public Vehicle(String model,String color, String year, AutoMaker autoMaker) {
+
+    public Vehicle(String model, String color, String year, AutoMaker autoMaker) {
         this.model = model;
         this.color = color;
         this.year = year;
         this.autoMaker = autoMaker;
+    }
+
+    public Vehicle(String model, String color, String year, AutoMaker autoMaker, VehicleTypeEnum vehicleTypeEnum) {
+        this.model = model;
+        this.color = color;
+        this.year = year;
+        this.autoMaker = autoMaker;
+        this.vehicleTypeEnum = vehicleTypeEnum;
     }
 
     public void prettyPrint(){
@@ -18,6 +29,7 @@ public class Vehicle {
         System.out.println("Color " + color);
         System.out.println("Year " + year);
         System.out.println("AutoMaker " + autoMaker.getName());
+        System.out.println("Vehicle Type " + getVehicleType());
         System.out.println("------------------");
     }
 
@@ -51,5 +63,13 @@ public class Vehicle {
 
     public void setAutoMaker(AutoMaker autoMaker) {
         this.autoMaker = autoMaker;
+    }
+
+    public VehicleTypeEnum getVehicleTypeEnum() {
+        return vehicleTypeEnum;
+    }
+
+    public void setVehicleTypeEnum(VehicleTypeEnum vehicleTypeEnum) {
+        this.vehicleTypeEnum = vehicleTypeEnum;
     }
 }

@@ -1,16 +1,16 @@
-package domain;
+package src.domain;
 
 public class AutoMaker {
     private String name;
-    private Vehicle[] vehicles;
+    private Vehicle[] cars;
 
     public AutoMaker(String name) {
         this.name = name;
     }
 
-    public AutoMaker(String name, Vehicle[] vehicles) {
+    public AutoMaker(String name, Vehicle[] cars) {
         this.name = name;
-        this.vehicles = vehicles;
+        this.cars = cars;
     }
 
     public String getName() {
@@ -22,10 +22,10 @@ public class AutoMaker {
     }
 
     public Vehicle[] getVehicles() {
-        return vehicles;
+        return cars;
     }
 
-    public void setVehicles(Vehicle[] vehicles) {
-        this.vehicles = vehicles;
+    public void setVehicles(Vehicle[] cars) {
+        this.cars = cars;
     }
 }
