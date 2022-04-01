@@ -46,19 +46,19 @@ public class VehicleRepository {
         };
         return VehicleList;
     }
-
     public VehicleRepository() {
         vehicleList = initVehicleArray();
     }
 
-
     public void addVehicleToRepository(Vehicle vehicle) {
+
         int i;
         Vehicle[] newVehicleList = new Vehicle[vehicleList.length + 1];
         for (i = 0; i < vehicleList.length; i++)
             newVehicleList[i] = vehicleList[i];
         newVehicleList[vehicleList.length] = vehicle;
         vehicleList = newVehicleList;
+
     }
 
     public void updatedVehicleRepository(Vehicle car) {

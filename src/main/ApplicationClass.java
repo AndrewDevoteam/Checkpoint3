@@ -8,7 +8,6 @@ public class ApplicationClass {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         VehicleService vehicleService = new VehicleService();
-        VehicleRepository vehicleRepository = new VehicleRepository();
 
 
         int continueOrNot = 1;
@@ -47,35 +46,26 @@ public class ApplicationClass {
                     String vehicleType = scanner.next();
                     VehicleTypeEnum vehicleTypeEnum = VehicleTypeEnum.valueOf(vehicleType);
                     AutoMaker automaker = new AutoMaker(autoMaker);
-                    Vehicle vehicle = vehicleService.addVehicle(name, color, year, automaker, vehicleTypeEnum);
-                    vehicleRepository.addVehicleToRepository(vehicle);
+                    vehicleService.createVehicle(name, color, year, automaker, vehicleTypeEnum);
+
                 }
                 case 4 -> {
                     System.out.println("Please type in the name of the vehicle to update");
                     String selectedVehicle = scanner.next();
-                    boolean result = false;
-                    for (Vehicle car : vehicleRepository.getVehicleList()) {
-                        if (car.getModel().equalsIgnoreCase(selectedVehicle)) {
-                            result = true;
-                            System.out.println("Please type in the updated vehicle name ");
-                            String updatedName = scanner.next();
-                            System.out.println("Please type in the updated year of Production ");
-                            String updatedYear = scanner.next();
-                            System.out.println("Please type in the updated color ");
-                            String updatedColor = scanner.next();
-                            System.out.println("Please type in the updated name of the automaker ");
-                            String updatedManufacturer = scanner.next();
-                            System.out.println("Please type in the updated vehicle type (ALL CAPS) ");
-                            String updatedType = scanner.next();
-                            VehicleTypeEnum vehicleTypeEnum = VehicleTypeEnum.valueOf(updatedType);
-                            AutoMaker automaker = new AutoMaker(updatedManufacturer);
-                            Vehicle newCar = vehicleService.addVehicle(updatedName, updatedColor, updatedYear, automaker, vehicleTypeEnum);
-                            vehicleService.updateVehicle(car, newCar);
-                        }
-                    }
-                    if (!result) {
-                        System.out.println("Invalid option");
-                    }
+                    System.out.println("Please type in the updated vehicle name ");
+                    String updatedName = scanner.next();
+                    System.out.println("Please type in the updated year of Production ");
+                    String updatedYear = scanner.next();
+                    System.out.println("Please type in the updated color ");
+                    String updatedColor = scanner.next();
+                    System.out.println("Please type in the updated name of the automaker ");
+                    String updatedManufacturer = scanner.next();
+                    System.out.println("Please type in the updated vehicle type (ALL CAPS) ");
+                    String updatedType = scanner.next();
+                    VehicleTypeEnum vehicleTypeEnum = VehicleTypeEnum.valueOf(updatedType);
+                    AutoMaker automaker = new AutoMaker(updatedManufacturer);
+                    Vehicle newCar = vehicleService.addVehicle(updatedName, updatedColor, updatedYear, automaker, vehicleTypeEnum);
+                    vehicleService.getVehicle(selectedVehicle, newCar);
                 }
                 case 5 -> {
                     System.out.println("Please type in the name of the vehicle you want to delete");

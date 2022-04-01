@@ -6,7 +6,6 @@ public class VehicleService {
 
     public void searchByAutomaker(String manufacturerName) {
         boolean result = false;
-
         for (int i = 0; i < vehicleRepository.getVehicleList().length; i++) {
             if (vehicleRepository.getVehicleList()[i].getAutoMaker().getName().equalsIgnoreCase(manufacturerName)) {
                 result = true;
@@ -31,6 +30,11 @@ public class VehicleService {
         }
     }
 
+    public void createVehicle(String model, String color, String year, AutoMaker automaker, VehicleTypeEnum vehicleTypeEnum){
+        Vehicle vehicle = addVehicle(model, color, year, automaker, vehicleTypeEnum);
+        vehicleRepository.addVehicleToRepository(vehicle);
+    }
+
     public Vehicle addVehicle(String model, String color, String year, AutoMaker automaker, VehicleTypeEnum vehicleTypeEnum) {
 
         return switch (vehicleTypeEnum) {
@@ -43,16 +47,28 @@ public class VehicleService {
         };
     }
 
-    public void updateVehicle(Vehicle carOld, Vehicle carNew) {
-        for (int i = 0; i < vehicleRepository.getVehicleList().length; i++) {
-            if (vehicleRepository.getVehicleList()[i].getModel().equalsIgnoreCase(carOld.getModel())) {
-                vehicleRepository.getVehicleList()[i].setModel(carNew.getModel());
-                vehicleRepository.getVehicleList()[i].setColor(carNew.getColor());
-                vehicleRepository.getVehicleList()[i].setYear(carNew.getYear());
-                vehicleRepository.getVehicleList()[i].setAutoMaker(carNew.getAutoMaker());
-                vehicleRepository.getVehicleList()[i].setVehicleTypeEnum(carNew.getVehicleType());
+    public void getVehicle(String vehicleName, Vehicle newVehicle){
+
+        boolean result = false;
+        for (Vehicle vehicle : vehicleRepository.getVehicleList()) {
+            if(vehicle.getModel().equalsIgnoreCase(vehicleName)){
+                result = true;
+                updateVehicle(vehicle, newVehicle);
             }
         }
+        if (!result) {
+            System.out.println("Invalid vehicle option");
+        }
+    }
+
+
+    public void updateVehicle(Vehicle carOld, Vehicle carNew) {
+        for (int i = 0; i < vehicleRepository.getVehicleList().length; i++) {
+            if(vehicleRepository.getVehicleList()[i].getModel().equalsIgnoreCase(carOld.getModel())){
+                vehicleRepository.getVehicleList()[i] = carNew;
+            }
+        }
+
     }
 
     public void deleteVehicleByModel(String deleteVehicle) {
