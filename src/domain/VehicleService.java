@@ -2,6 +2,9 @@ package src.domain;
 
 public class VehicleService {
 
+//    By taking a closer look, you will notice that the methods in the VehicleService are still returning Vehicle, even though you are working with Car now, can you explain why it works fine?
+//    It works because the Car class inherits all its properties from the parent class Vehicle.
+
     private final VehicleRepository vehicleRepository = new VehicleRepository();
 
     public void searchByAutomaker(String manufacturerName) {
