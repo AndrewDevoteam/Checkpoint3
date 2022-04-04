@@ -6,6 +6,9 @@ public class VehicleService {
 
     public void searchByAutomaker(String manufacturerName) {
         boolean result = false;
+        if(manufacturerName == null){
+            System.out.println("Please enter a valid option");
+        }
         for (int i = 0; i < vehicleRepository.getVehicleList().length; i++) {
             if (vehicleRepository.getVehicleList()[i].getAutoMaker().getName().equalsIgnoreCase(manufacturerName)) {
                 result = true;
@@ -19,6 +22,9 @@ public class VehicleService {
 
     public void searchByModel(String modelName) {
         boolean result = false;
+        if(modelName == null){
+            System.out.println("Please enter a valid option");
+        }
         for (int i = 0; i < vehicleRepository.getVehicleList().length; i++) {
             if (vehicleRepository.getVehicleList()[i].getModel().equalsIgnoreCase(modelName)) {
                 result = true;
@@ -31,6 +37,9 @@ public class VehicleService {
     }
 
     public void createVehicle(String model, String color, String year, AutoMaker automaker, VehicleTypeEnum vehicleTypeEnum){
+        if(model == null || color == null ||year == null ||automaker == null ||vehicleTypeEnum == null){
+            System.out.println("please input a valid option");
+        }
         Vehicle vehicle = addVehicle(model, color, year, automaker, vehicleTypeEnum);
         vehicleRepository.addVehicleToRepository(vehicle);
     }
@@ -68,7 +77,6 @@ public class VehicleService {
                 vehicleRepository.getVehicleList()[i] = carNew;
             }
         }
-
     }
 
     public void deleteVehicleByModel(String deleteVehicle) {
